@@ -8,8 +8,22 @@ services:
       - .:/code
     ports:
       - 8000:8000
+      - redis
 
   db:
     image: postgres:18
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
+  
